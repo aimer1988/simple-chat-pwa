@@ -1,10 +1,10 @@
 <template>
   <div class="message-input">
-    <input :value="value"
-           @input="$emit('input', $event.target.value)"
-           type="text"
-           placeholder="Сообщение"
-           class="message-input__text" />
+    <textarea :value="value"
+              @input="$emit('input', $event.target.value)"
+              type="text"
+              placeholder="Сообщение"
+              class="message-input__text" />
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
 <style lang="scss">
 .message-input {
   background-color: white;
-  height: 5%;
+  height: 10%;
 
   &__text {
     display: inline-block;

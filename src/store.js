@@ -9,6 +9,7 @@ export default new Vuex.Store({
     isMobile: false,
     activeMobileWindow: 'userList',
     chatSocketService: null,
+    userId: null,
     chosenUser: null,
     users: [
       {
@@ -32,7 +33,13 @@ export default new Vuex.Store({
     // setting if device type is mobile or not
     setDeviceType(state) {
       let check = false;
-      if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+      if (navigator.userAgent.match(/Android/i)
+          || navigator.userAgent.match(/webOS/i)
+          || navigator.userAgent.match(/iPhone/i)
+          || navigator.userAgent.match(/iPad/i)
+          || navigator.userAgent.match(/iPod/i)
+          || navigator.userAgent.match(/BlackBerry/i)
+          || navigator.userAgent.match(/Windows Phone/i)) {
         check = true;
       }
       state.isMobile = check;
@@ -44,6 +51,10 @@ export default new Vuex.Store({
     // setting chat socket service
     setChatSocketService(state, service) {
       state.chatSocketService = service;
+    },
+    // setting current user id
+    setUserId(state, userId) {
+      state.userId = userId;
     },
     // add chat message
     addChatMessage(state, message) {

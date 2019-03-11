@@ -12,14 +12,19 @@ const server = https.createServer({
 const webSocketServer = new webSocket.Server({ server });
 
 webSocketServer.on('connection', (ws) => {
-  const id = Math.random();
+  const id = Math.floor(Math.random() * 1000000000);
   clients[id] = ws;
   console.log(`Присоединился новый клиент: ${id}`);
+  clients[id].send(JSON.stringify({
+    type: 'userConnection',
+    userId: id,
+  }));
 
   ws.on('message', (message) => {
     console.log(`Получено сообщение ${message}`);
 
     const messageInfo = {
+      type: 'newMessage',
       userId: id,
       message,
       time: new Date(),

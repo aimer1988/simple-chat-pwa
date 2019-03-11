@@ -30,14 +30,25 @@ export default {
   },
   methods: {
     ...mapMutations([
+      'setUserId',
       'addChatMessage',
     ]),
     sendMessage() {
       this.chatSocketService.sendMessage(this.ownChatMessage);
+      this.ownChatMessage = '';
     },
   },
   created() {
-    this.chatSocketService.addListener('message', mes => this.addChatMessage(JSON.parse(mes.data)));
+    this.chatSocketService.addListener('message', (mes) => {
+      const mesParsedData = JSON.parse(mes.data);
+      if (mesParsedData.type === 'newMessage') {
+        this.addChatMessage(mesParsedData);
+      }
+
+      if (mesParsedData.type === 'userConnection') {
+        this.setUserId(mesParsedData.userId);
+      }
+    });
   },
 };
 </script>

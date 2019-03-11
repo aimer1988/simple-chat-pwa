@@ -1,22 +1,25 @@
 <template>
   <div class="message-list">
-    <div v-for="messageInfo in chatMessages"
-         :key="messageInfo.message"
-         class="message-list__item user-message">
-      <p class="user-message__user">{{ messageInfo.userId }}</p>
-      <p class="user-message__text">{{ messageInfo.message }}</p>
-      <p class="user-message__time">{{ new Date(messageInfo.time).toLocaleString() }}</p>
-    </div>
+    <chat-window-message-item v-for="messageInfo in chatMessages"
+                              :key="messageInfo.message"
+                              :message-info="messageInfo"
+                              :own="messageInfo.userId === userId">
+    </chat-window-message-item>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
+import ChatWindowMessageItem from './ChatWindowMessageItem.vue';
 
 export default {
+  components: {
+    ChatWindowMessageItem,
+  },
   computed: {
     ...mapState([
       'chatMessages',
+      'userId',
     ]),
   },
 };
@@ -24,15 +27,11 @@ export default {
 
 <style lang="scss">
 .message-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
   padding: 1rem;
   background-color: #42b983;
-  height: 95%;
-  width: 100%;
-
-  &__item {
-    width: 20%;
-    background-color: white;
-    border-radius: 10px;
-  }
+  height: 90%;
 }
 </style>
